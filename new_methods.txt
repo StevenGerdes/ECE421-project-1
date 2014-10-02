@@ -1,0 +1,15 @@
+multiply!
+scalar_multiply
+scalar_multiply!
+add!
+scalar_add
+scalar_add!
+subtract!
+scalar_subtract
+scalar_subtract!
+divide!
+scalar_divide
+scalar_divide!
+inverse!
+transpose!
+round!
