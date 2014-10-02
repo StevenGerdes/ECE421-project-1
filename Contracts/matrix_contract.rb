@@ -10,21 +10,20 @@ class MatrixContract < Test::Unit::TestCase
     #preconditions
     #none
 
-    matrix.diagonal?
-    matrix.hermitian?
+    matrix.diagonal? #square
+    matrix.hermitian? #square
+    matrix.normal? #square
+    matrix.orthogonal? #square
+    matrix.permutation? #square
+    matrix.symmetric? #square
+    matrix.unitary? #square
     matrix.lower_triangular?
-    matrix.normal?
-    matrix.orthogonal?
-    matrix.permutation?
     matrix.real?
     matrix.regular?
     matrix.singular?
     matrix.square?
-    matrix.symmetric?
-    matrix.unitary?
     matrix.upper_triangular?
     matrix.zero?
-    matrix.invertable?
 
     #postconditions
     assert_true(result.is_a? TrueClass or result.is_a? FalseClass)
@@ -56,7 +55,7 @@ class MatrixContract < Test::Unit::TestCase
   def test_mutable_multiply_matrix
     matrix = AbstractMatrixFactory.build
     to_multiply = AbstractMatrixFactory.build
-    matrix_old = matrix.clone
+    old_row_count = matrix.row_count
 
     #pre-conditions
     assert_equal(matrix.column_count, to_multiply.rows)
@@ -64,8 +63,10 @@ class MatrixContract < Test::Unit::TestCase
     matrix.multiply! to_multiply
 
     #post-condition
-    assert_equal(matrix.row_count, matrix_old.row_count)
     assert_equal(matrix.column_count, to_multiply.column_count)
+
+    #invarient
+    assert_equal(matrix.row_count, old_row_count)
 
   end
 
@@ -77,7 +78,7 @@ class MatrixContract < Test::Unit::TestCase
     matrix_old = matrix.clone
 
     #pre-conditions
-    assert_true(to_multiply.is_a? Numeric )
+    assert_true(to_multiply.is_a? Numeric)
 
     result = matrix.scalar_multiply to_multiply
 
@@ -100,7 +101,7 @@ class MatrixContract < Test::Unit::TestCase
     num_columns = matrix.column_count
 
     #pre-conditions
-    assert_true(to_multiply.is_a? Numeric )
+    assert_true(to_multiply.is_a? Numeric)
 
     matrix.scalar_multiply! to_multiply
 
@@ -165,7 +166,7 @@ class MatrixContract < Test::Unit::TestCase
     matrix_old = matrix.clone
 
     #pre-conditions
-    assert_true(scalar_arg.is_a? Numeric )
+    assert_true(scalar_arg.is_a? Numeric)
     result = matrix.add_scalar scalar_arg
 
     #post-condition
@@ -295,7 +296,7 @@ class MatrixContract < Test::Unit::TestCase
     matrix_old = matrix.clone
 
     #pre-conditions
-    assert_true(to_divide.invertable?)
+    assert_true(to_divide.singular?)
     assert_equal(matrix.column_count, to_divide.row_count)
 
     result = matrix / to_divide
@@ -315,7 +316,7 @@ class MatrixContract < Test::Unit::TestCase
     matrix_old = matrix.clone
 
     #pre-conditions
-    assert_true(to_divide.invertable?)
+    assert_true(to_divide.singular?)
     assert_equal(matrix.column_count, to_divide.rows)
 
     matrix.divide! to_divide
@@ -334,7 +335,7 @@ class MatrixContract < Test::Unit::TestCase
     matrix_old = matrix.clone
 
     #pre-conditions
-    assert_true(to_divide.is_a? Numeric )
+    assert_true(to_divide.is_a? Numeric)
 
     result = matrix.scalar_divide to_divide
 
@@ -356,8 +357,8 @@ class MatrixContract < Test::Unit::TestCase
     num_columns = matrix.column_count
 
     #pre-conditions
-    assert_true(to_divide.is_a? Numeric )
-    assert_not_equal(to_divide, 0 )
+    assert_true(to_divide.is_a? Numeric)
+    assert_not_equal(to_divide, 0)
 
     matrix.scalar_divide! to_divide
 
@@ -376,7 +377,7 @@ class MatrixContract < Test::Unit::TestCase
     matrix_old = matrix.clone
 
     #pre-conditions
-    assert_true( matrix.invertable? )
+    assert_true(matrix.singular?)
 
     result = matrix.inverse
 
@@ -385,6 +386,23 @@ class MatrixContract < Test::Unit::TestCase
 
     #invarient
     assert_equal(matrix, matrix_old)
+  end
+
+  def test_inverse!
+    matrix = AbstractMatrixFactory.build
+
+    matrix_old = matrix.clone
+
+    #pre-conditions
+    assert_true(matrix.singular?)
+
+    matrix.inverse
+
+    #post-condition
+    assert_equal(Matrix.I(matrix.row_count), matrix * matrix_old)
+
+    #invarient
+
   end
 
   def test_determinant
@@ -398,21 +416,19 @@ class MatrixContract < Test::Unit::TestCase
     result = matrix.determinant
 
     #post-condition
-    assert_kind_of( Numeric, result)
+    assert_kind_of(Numeric, result)
     assert_equal(result, 1/matrix.inverse.determinant)
 
     #invarient
     assert_equal(matrix, matrix_old)
   end
 
-
   def test_transpose
-    matrix = SparseMatrix.new
+    matrix = AbstractMatrixFactory.build
 
-    matrix_old = matrix.clone
 
     #Invarient
-    assert_equal(matrix, matrix_old)
+    matrix_old = matrix.clone
 
     #pre-conditions
     #none
@@ -422,18 +438,19 @@ class MatrixContract < Test::Unit::TestCase
     #post-condition
     assert_equal(matrix.rows, result.columns)
     assert_equal(matrix.columns, result.rows)
+    assert_equal(matrix.determinant, result.determinant)
 
     #invarient
     assert_equal(matrix, matrix_old)
   end
 
   def test_transpose!
-    matrix = SparseMatrix.new
+    matrix = AbstractMatrixFactory.build
 
     matrix_old = matrix.clone
 
-    #Invarient
-    assert_equal(matrix, matrix_old)
+    #invarient
+    old_determinant = matrix.determinant
 
     #pre-conditions
     #none
@@ -445,25 +462,215 @@ class MatrixContract < Test::Unit::TestCase
     assert_equal(matrix.column_vectors, matrix_old.row_vectors)
 
     #invarient
+    assert_equal(old_determinant, matrix.determinant)
 
   end
 
-  def test_access(i, j)
+  def test_access
+    matrix = AbstractMatrixFactory.build
 
-  end
-  def test_row_size
+    i = Integer.new
+    j = Integer.new
 
-  end
-  def test_column_size
+    #Invarient
+    matrix_old = matrix.clone
 
+    #Preconditions
+    assert_respond_to(i, :to_i)
+    assert_respond_to(j, :to_i)
+    assert_true(0 <= i && i < matrix.row_count)
+    assert_true(0 <= j && j < matrix.column_count)
+
+    result = matrix[i, j]
+
+    #Postcondition
+    assert_kind_of(Numeric, result)
+
+    #Invarient
+    assert_equal(matrix, matrix_old)
   end
+
   def test_row
+    matrix = AbstractMatrixFactory.build
 
+    i = Integer.new
+
+    #Invarient
+    matrix_old = matrix.clone
+
+    #Preconditions
+    assert_respond_to(i, :to_i)
+    assert_true(0 <= i && i < matrix.column_count)
+
+    result = matrix.row(i)
+
+    #Postcondition
+    assert_equal(matrix.column_count, result.size)
+
+    #Invarient
+    assert_equal(matrix, matrix_old)
   end
 
   def test_column
+    matrix = AbstractMatrixFactory.build
+
+    j = Integer.new
+
+    #Invarient
+    matrix_old = matrix.clone
+
+    #Preconditions
+    assert_respond_to(j, :to_i)
+    assert_true(0 <= j && j < matrix.column_count)
+
+    result = matrix.column(j)
+
+    #Postcondition
+    assert_equal(matrix.row_count, result.size)
+
+    #Invarient
+    assert_equal(matrix, matrix_old)
+  end
+
+  def test_row_vectors
+    matrix = AbstractMatrixFactory.build
+
+    #Invarient
+    matrix_old = matrix.clone
+
+    #Preconditions
+
+    result = matrix.row_vectors
+
+    #Postcondition
+    assert_equal(matrix.row_count, result.size)
+
+    #Invarient
+    assert_equal(matrix, matrix_old)
+  end
+
+  def test_column_vectors
+    matrix = AbstractMatrixFactory.build
+
+    #Invarient
+    matrix_old = matrix.clone
+
+    #Preconditions
+
+    result = matrix.column_vectors
+
+    #Postcondition
+    assert_equal(matrix.column_count, result.size)
+
+    #Invarient
+    assert_equal(matrix, matrix_old)
+  end
+
+  def test_row_count
+    matrix = AbstractMatrixFactory.build
+
+    #Invarient
+    old_matrix = matrix.clone
+
+    #preconditions
+    #none
+
+    result = matrix.row_count
+
+    #postconditions
+    assert_kind_of(Integer, result)
+    assert_true(result >= 0)
+
+    #Invarient
+    assert_equal(old_matrix, matrix)
+  end
+
+  def test_column_count
+    matrix = AbstractMatrixFactory.build
+
+    #Invarient
+    old_matrix = matrix.clone
+
+    #preconditions
+    #none
+
+    result = matrix.column_count
+
+    #postconditions
+    assert_kind_of(Integer, result)
+    assert_true(result >= 0)
+
+    #Invarient
+    assert_equal(old_matrix, matrix)
+  end
+
+  def test_round
+    matrix = AbstractMatrixFactory.build
+
+    num_digits = Integer.new
+
+    #Invarient
+    matrix_old = matrix.clone
+
+    #preconditions
+    assert_respond_to(num_digits, :to_i)
+    assert_true(num_digits >= 0)
+
+    result = matrix.round num_digits
+
+    #postconditions
+    assert_equal(matrix.row_count, result.row_count)
+    assert_equal(matrix.column_count, result.column_count)
+
+    #Invarient
+    assert_equal(matrix, matrix_old)
+  end
+
+  def test_round!
+    matrix = AbstractMatrixFactory.build
+
+    num_digits = Integer.new
+
+    #Invarient
+    old_row_count = matrix.row_count
+    old_column_count = matrix.column_count
+
+    #preconditions
+    assert_respond_to(num_digits, :to_i)
+    assert_true(num_digits >= 0)
+
+    matrix.round num_digits
+
+    #postconditions
+
+    #Invarient
+    assert_equal(old_row_count, matrix.row_count)
+    assert_equal(old_column_count, matrix.column_count)
 
   end
+
+  def test_to_s
+    matrix = AbstractMatrixFactory.build
+
+    #Invarient
+    old_matrix = matrix.clone
+
+    #preconditions
+    #none
+
+    result = matrix.to_s
+
+    #postconditions
+    assert_kind_of(String, result)
+
+    #Invarient
+    assert_equal(old_matrix, matrix)
+  end
+
+  def test_set
+
+  end
+
 
   def test_collect
 
@@ -484,20 +691,6 @@ class MatrixContract < Test::Unit::TestCase
   def test_find_index
 
   end
-
-
-  def test_to_s
-
-  end
-
-  def test_round
-
-  end
-
-  def test_round!
-
-  end
-
 
   def test_imaginary
 
@@ -531,16 +724,7 @@ class MatrixContract < Test::Unit::TestCase
 
   end
 
-
   def test_coerce(other)
-
-  end
-
-  def test_row_vectors
-
-  end
-
-  def test_column_vectors
 
   end
 
