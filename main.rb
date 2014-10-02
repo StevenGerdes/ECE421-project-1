@@ -1,8 +1,3 @@
-require 'matrix'
+require './Contracts/matrix_contract'
 
-blah = Matrix.I(4)
-puts blah
-puts "okay?"
-first, second = blah.coerce(1)
-puts first
-puts second
+blah = MatrixContract.new(:test_properties)

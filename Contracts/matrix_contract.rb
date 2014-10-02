@@ -1,35 +1,46 @@
 gem 'test-unit'
 require 'test/unit'
-require '../abstract_matrix_factory'
 
 class MatrixContract < Test::Unit::TestCase
   def test_properties
-    matrix = AbstractMatrixFactory.build
-    matrix_old = matrix.clone
+    matrix = Matrix.I(2)
+
+    boolean_methods = [:diagonal?,
+    :hermitian?,
+    :normal?,
+    :orthogonal?,
+    :permutation?,
+    :symmetric?,
+    :unitary?,
+    :lower_triangular?,
+    :real?,
+    :regular?,
+    :singular?,
+    :square?,
+    :upper_triangular?,
+    :zero?]
+
+    boolean_methods.each do |method|
+      simple_boolean_contract(matrix, method)
+    end
+
+  end
+
+  def simple_boolean_contract(object, method)
+
+    object_old = object.clone
 
     #preconditions
     #none
 
-    matrix.diagonal? #square
-    matrix.hermitian? #square
-    matrix.normal? #square
-    matrix.orthogonal? #square
-    matrix.permutation? #square
-    matrix.symmetric? #square
-    matrix.unitary? #square
-    matrix.lower_triangular?
-    matrix.real?
-    matrix.regular?
-    matrix.singular?
-    matrix.square?
-    matrix.upper_triangular?
-    matrix.zero?
+    result = object.send(method)
 
     #postconditions
-    assert_true(result.is_a? TrueClass or result.is_a? FalseClass)
+    assert_true(result.is_a?( TrueClass) || result.is_a?( FalseClass))
 
     #invarient
-    assert_equal(matrix, matrix_old)
+    assert_equal(object, object_old)
+
   end
 
   def test_multiply_matrix
