@@ -21,7 +21,7 @@ class MatrixFactoryContract < Test::Unit::TestCase
     result = SparseMatrixFactory.valid_data(input_matrix)
 
     #Post-condition
-    assert_true(result.is_a?(TrueClass) or result.is_a?(FalseClass))
+    assert_true(result.is_a?(TrueClass) || result.is_a?(FalseClass))
 
     #Invarient
     assert_equal(old_matrix, input_matrix)
@@ -39,7 +39,7 @@ class MatrixFactoryContract < Test::Unit::TestCase
     result = TridiagonalMatrixFactory.valid_data(input_matrix)
 
     #Post-condition
-    assert_true(result.is_a?(TrueClass) or result.is_a?(FalseClass))
+    assert_true(result.is_a?(TrueClass) || result.is_a?(FalseClass))
 
     #Invarient
     assert_equal(old_matrix, input_matrix)
