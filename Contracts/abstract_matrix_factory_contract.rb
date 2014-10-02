@@ -7,6 +7,7 @@ require '../sparse_matrix_factory'
 require '../tridiagonal_matrix_factory'
 
 class AbstractMatrixFactoryContract < Test::Unit::TestCase
+
   def test_build_block
     abstract_matrix_factory = AbstractMatrixFactory.new
     matrix_row = Numeric.new
@@ -28,7 +29,7 @@ class AbstractMatrixFactoryContract < Test::Unit::TestCase
     assert_equal(old_matrix_factory, abstract_matrix_factory)
   end
 
-  def test_build_matrix
+  def test_build_array
     abstract_matrix_factory = AbstractMatrixFactory.new
     input_array = Array.new
 
@@ -88,6 +89,7 @@ class AbstractMatrixFactoryContract < Test::Unit::TestCase
     assert_equal(old_matrix_factory, abstract_matrix_factory)
   end
 
+  #This function tests the post conditions for a newly created Matrix to see if it responds to all applicable methods
   def post_condition_test(new_abstract_matrix)
     new_methods = [:multiply!,
                    :scalar_multiply,
