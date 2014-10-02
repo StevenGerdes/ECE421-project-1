@@ -1,61 +1,46 @@
 gem 'test-unit'
 require 'test/unit'
 require './sparse_matrix'
-class TestSparseMatrix < Test::Unit::TestCase
-  def test_diagonal?
-  end
 
-  def test_empty?
-  end
+class MatrixContract < Test::Unit::TestCase
+  def test_properties
+    matrix = SparseMatrix.new
+    matrix_old = matrix.clone
 
-  def test_hermitian?
-  end
+    #preconditions
+    #none
 
-  def test_lower_triangular?
-  end
+    matrix.diagonal?
+    matrix.hermitian?
+    matrix.lower_triangular?
+    matrix.normal?
+    matrix.orthogonal?
+    matrix.permutation?
+    matrix.real?
+    matrix.regular?
+    matrix.singular?
+    matrix.square?
+    matrix.symmetric?
+    matrix.unitary?
+    matrix.upper_triangular?
+    matrix.zero?
 
-  def test_normal?
-  end
+    #postconditions
+    assert_true(result.is_a? TrueClass or result.is_a? FalseClass)
 
-  def test_orthogonal?
-  end
-
-  def test_permutation?
-  end
-
-  def test_real?
-  end
-
-  def test_regular?
-  end
-
-  def test_singular?
-  end
-
-  def test_square?
-  end
-
-  def test_symmetric?
-  end
-
-  def test_unitary?
-  end
-
-  def test_upper_triangular?
-  end
-
-  def test_zero?
+    #invarient
+    assert_equal(matrix, matrix_old)
   end
 
   def test_multiply_matrix
-    matrix = SparseMatrix.new
-    to_multiply = SparseMatrix.new
+    matrix = SparseMatrixFactory.build
+    to_multiply = SparseMatrixFactory.build
 
     #Invarient
     matrix_old = matrix.clone
 
     #pre-conditions
-    assert_equal(matrix.columns, to_multiply.rows)
+    assert_equal(matrix.column_count, to_multiply.rows)
 
     result = matrix * to_multiply
 
@@ -83,7 +68,7 @@ class TestSparseMatrix < Test::Unit::TestCase
     #post-condition
     assert_equal(result.rows, matrix.rows)
     assert_equal(result.columns, to_multiply.columns)
-    assert_equal(result, to_multiply * matrix )#assocativitey
+    assert_equal(result, to_multiply * matrix) #assocativitey
 
     #invarient
     assert_equal(matrix, matrix_old)
@@ -164,7 +149,7 @@ class TestSparseMatrix < Test::Unit::TestCase
     assert_equal(matrix, matrix_old)
 
     #pre-conditions
-    assert_not_equal( 0 , matrix.determinant )
+    assert_not_equal(0, matrix.determinant)
 
     result = matrix.inverse
 
