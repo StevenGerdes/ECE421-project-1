@@ -12,4 +12,6 @@ scalar_divide
 scalar_divide!
 inverse!
 transpose!
+
 round!
+invertible?
