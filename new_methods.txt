@@ -13,5 +13,6 @@ scalar_divide!
 inverse!
 transpose!
 
+s
 set(i,j)
 round!
