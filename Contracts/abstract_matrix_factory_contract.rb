@@ -91,7 +91,7 @@ class AbstractMatrixFactoryContract < Test::Unit::TestCase
   def post_condition_test(new_abstract_matrix)
     new_methods = [:multiply!,
                    :scalar_multiply,
-                   :scalar_multiply,
+                   :scalar_multiply!,
                    :add!,
                    :scalar_add!,
                    :scalar_add,
@@ -103,7 +103,9 @@ class AbstractMatrixFactoryContract < Test::Unit::TestCase
                    :scalar_divide!,
                    :inverse!,
                    :transpose!,
-                   :round!]
+                   :round!,
+                   :set,
+                   :resize!]
     Matrix.instance_methods.each do |method|
       unless new_abstract_matrix.respond_to?(method)
         return false
