@@ -889,13 +889,17 @@ class MatrixContract < Test::Unit::TestCase
 
     #Invarient
     old_matrix = matrix.clone
+    arg = Numeric.new
 
     #preconditions
-    #none
+    assert_kind_of(Numeric, arg)
 
-    result = matrix.coerce
+    #our coerce will simply flip the arguments around
+    first, second = matrix.coerce arg
 
     #postconditions
+    assert_equal(matrix,first)
+    assert_equal(arg,second)
 
     #Invarient
     assert_equal(old_matrix, matrix)
@@ -903,10 +907,7 @@ class MatrixContract < Test::Unit::TestCase
 
   def test_to_a
     #returns an arrays of arrays
-    matrix = AbstractMatrixFactory.build
-
-    #Invarient
-    old_matrix = matrix.clone
+    matrix = AbstractMatrixFactory.build    old_matrix = matrix.clone
 
     #preconditions
     #none
