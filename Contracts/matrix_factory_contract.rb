@@ -8,6 +8,7 @@ require '../tridiagonal_matrix'
 require '../tridiagonal_matrix_factory'
 
 class MatrixFactoryContract < Test::Unit::TestCase
+
   def test_valid_data_sparse
     input_matrix = Matrix.I(5)
 
