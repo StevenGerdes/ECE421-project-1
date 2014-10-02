@@ -824,7 +824,7 @@ class MatrixContract < Test::Unit::TestCase
   end
 
   def test_trace
-    Returns the trace (sum of diagonal elements) of the matrix
+    #Returns the trace (sum of diagonal elements) of the matrix
     matrix = AbstractMatrixFactory.build
 
     #Invarient
