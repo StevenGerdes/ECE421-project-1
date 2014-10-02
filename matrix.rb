@@ -1,4 +1,4 @@
-require 'matrix'
+require 'Matrix'
 
 class Matrix
 end
