@@ -667,72 +667,260 @@ class MatrixContract < Test::Unit::TestCase
     assert_equal(old_matrix, matrix)
   end
 
+  def test_resize!
+    matrix = AbstractMatrixFactory.build
+
+    i = Integer.new
+    j = Integer.new
+
+    #preconditions
+    assert_respond_to(i, :to_i)
+    assert_respond_to(j, :to_i)
+
+    matrix.resize(i,j)
+
+    #postconditions
+    assert_equal(matrix.row_count, i)
+    assert_equal(matrix.column_count, j)
+
+  end
+
   def test_set
+    matrix = AbstractMatrixFactory.build
+    i = Integer.new
+    j = Integer.new
+    value = Numeric.new
 
-  end
+    #invarient
+    old_matrix = matrix.clone
 
+    #preconditions
+    assert_true(0 <= i && i < matrix.row_count)
+    assert_true(0 <= j && j < matrix.column_count)
+    assert_kind_of(Numeric, value)
 
-  def test_collect
+    matrix[i,j] = value
 
-  end
+    #postconditions
+    assert_equal(matix[i,j], value)
 
-  def test_map
-
-  end
-
-  def test_each
-
-  end
-
-  def test_each_with_index
-
-  end
-
-  def test_find_index
-
+    #Invarient
+    assert_equal(old_matrix.row_count, matrix.row_count)
+    assert_equal(old_matrix.column_count, matrix.column_count)
   end
 
   def test_imaginary
+    matrix = AbstractMatrixFactory.build
 
+    #Invarient
+    old_matrix = matrix.clone
+
+    #preconditions
+    #none
+
+    result = matrix.imaginary
+
+    #postconditions
+    assert_false(result.real?)
+    assert_equal(result.row_count, matrix.row_count)
+    assert_equal(result.column_count, matrix.column_count)
+
+    #Invarient
+    assert_equal(old_matrix, matrix)
   end
 
   def test_real
+    matrix = AbstractMatrixFactory.build
 
+    #Invarient
+    old_matrix = matrix.clone
+
+    #preconditions
+    #none
+
+    result = matrix.real
+
+    #postconditions
+    assert_true(result.real?)
+    assert_equal(result.row_count, matrix.row_count)
+    assert_equal(result.column_count, matrix.column_count)
+
+    #Invarient
+    assert_equal(old_matrix, matrix)
   end
 
   def test_conjugate
+    matrix = AbstractMatrixFactory.build
 
+    #Invarient
+    old_matrix = matrix.clone
+
+    #preconditions
+    #none
+
+    result = matrix.conjugate
+
+    #postconditions
+    assert_equal(result.imaginary, -1 * matrix.imaginary )
+
+    #Invarient
+    assert_equal(old_matrix.real, matrix.real)
+  end
+
+  def test_conjugate!
+    matrix = AbstractMatrixFactory.build
+
+    #Invarient
+    old_matrix = matrix.clone
+
+    #preconditions
+    #none
+
+    matrix.conjugate!
+
+    #postconditions
+    assert_equal(old_matrix.imaginary, -1 * matrix.imaginary )
+
+    #Invarient
+    assert_equal(old_matrix.real, matrix.real)
   end
 
   def test_rectangular
+    matrix = AbstractMatrixFactory.build
 
+    #Invarient
+    old_matrix = matrix.clone
+
+    #preconditions
+    #none
+
+    result = matrix.imaginary
+
+    #postconditions
+    assert_equal(result.size, 2)
+    assert_true(result[0].real?)
+    assert_false(result[1].real?)
+
+    #Invarient
+    assert_equal(old_matrix, matrix)
   end
 
   def test_rank
+#number of linearly indeoendant phones
+    matrix = AbstractMatrixFactory.build
 
+    #Invarient
+    old_matrix = matrix.clone
+
+    #preconditions
+    #none
+
+    result = matrix.conjugate!
+
+    #postconditions
+
+    #Invarient
+    assert_equal(old_matrix, matrix)
   end
 
   def test_trace
+    Returns the trace (sum of diagonal elements) of the matrix
+    matrix = AbstractMatrixFactory.build
 
+    #Invarient
+    old_matrix = matrix.clone
+
+    #preconditions
+    #none
+
+    result = matrix.conjugate!
+
+    #postconditions
+
+    #Invarient
+    assert_equal(old_matrix, matrix)
   end
 
   def test_eigen
+    m = Matrix[[1, 2], [3, 4]]
+    v, d, v_inv = m.eigensystem
+    d.diagonal? # => true
+    v.inv == v_inv # => true
+    (v * d * v_inv).round(5) == m # => true
 
+    matrix = AbstractMatrixFactory.build
+
+    #Invarient
+    old_matrix = matrix.clone
+
+    #preconditions
+    #none
+
+    result = matrix.conjugate!
+
+    #postconditions
+
+    #Invarient
+    assert_equal(old_matrix, matrix)
   end
 
-  def test_1up_decomposition
+  def test_lup_decomposition
+    a = Matrix[[1, 2], [3, 4]]
+    l, u, p = a.lup
+    l.lower_triangular? # => true
+    u.upper_triangular? # => true
+    p.permutation?      # => true
+    l * u == a * p      # => true
+    a.lup.solve([2, 5]) # => Vector[(1/1), (1/2)]
 
+    matrix = AbstractMatrixFactory.build
+
+    #Invarient
+    old_matrix = matrix.clone
+
+    #preconditions
+    #none
+
+    result = matrix.conjugate!
+
+    #postconditions
+
+    #Invarient
+    assert_equal(old_matrix, matrix)
   end
 
   def test_coerce(other)
+    matrix = AbstractMatrixFactory.build
 
+    #Invarient
+    old_matrix = matrix.clone
+
+    #preconditions
+    #none
+
+    result = matrix.conjugate!
+
+    #postconditions
+
+    #Invarient
+    assert_equal(old_matrix, matrix)
   end
 
   def test_to_a
+#arrays of arrays
+    matrix = AbstractMatrixFactory.build
 
-  end
+    #Invarient
+    old_matrix = matrix.clone
 
-  def test_inspect
+    #preconditions
+    #none
 
+    result = matrix.conjugate!
+
+    #postconditions
+
+    #Invarient
+    assert_equal(old_matrix, matrix)
   end
 end
