@@ -677,7 +677,7 @@ class MatrixContract < Test::Unit::TestCase
     assert_respond_to(i, :to_i)
     assert_respond_to(j, :to_i)
 
-    matrix.resize(i,j)
+    matrix.resize(i, j)
 
     #postconditions
     assert_equal(matrix.row_count, i)
@@ -699,10 +699,10 @@ class MatrixContract < Test::Unit::TestCase
     assert_true(0 <= j && j < matrix.column_count)
     assert_kind_of(Numeric, value)
 
-    matrix[i,j] = value
+    matrix[i, j] = value
 
     #postconditions
-    assert_equal(matix[i,j], value)
+    assert_equal(matix[i, j], value)
 
     #Invarient
     assert_equal(old_matrix.row_count, matrix.row_count)
@@ -761,7 +761,7 @@ class MatrixContract < Test::Unit::TestCase
     result = matrix.conjugate
 
     #postconditions
-    assert_equal(result.imaginary, -1 * matrix.imaginary )
+    assert_equal(result.imaginary, -1 * matrix.imaginary)
 
     #Invarient
     assert_equal(old_matrix.real, matrix.real)
@@ -779,7 +779,7 @@ class MatrixContract < Test::Unit::TestCase
     matrix.conjugate!
 
     #postconditions
-    assert_equal(old_matrix.imaginary, -1 * matrix.imaginary )
+    assert_equal(old_matrix.imaginary, -1 * matrix.imaginary)
 
     #Invarient
     assert_equal(old_matrix.real, matrix.real)
@@ -806,7 +806,7 @@ class MatrixContract < Test::Unit::TestCase
   end
 
   def test_rank
-#number of linearly indeoendant phones
+    #returns number of linearly independant rows
     matrix = AbstractMatrixFactory.build
 
     #Invarient
@@ -815,16 +815,17 @@ class MatrixContract < Test::Unit::TestCase
     #preconditions
     #none
 
-    result = matrix.conjugate!
+    result = matrix.rank
 
     #postconditions
+    assert_kind_of(Integer, result)
 
     #Invarient
     assert_equal(old_matrix, matrix)
   end
 
   def test_trace
-    Returns the trace (sum of diagonal elements) of the matrix
+    #Returns the trace (sum of diagonal elements) of the matrix
     matrix = AbstractMatrixFactory.build
 
     #Invarient
@@ -833,21 +834,16 @@ class MatrixContract < Test::Unit::TestCase
     #preconditions
     #none
 
-    result = matrix.conjugate!
+    result = matrix.trace
 
     #postconditions
+    assert_kind_of(Numeric, result)
 
     #Invarient
     assert_equal(old_matrix, matrix)
   end
 
   def test_eigen
-    m = Matrix[[1, 2], [3, 4]]
-    v, d, v_inv = m.eigensystem
-    d.diagonal? # => true
-    v.inv == v_inv # => true
-    (v * d * v_inv).round(5) == m # => true
-
     matrix = AbstractMatrixFactory.build
 
     #Invarient
@@ -856,23 +852,18 @@ class MatrixContract < Test::Unit::TestCase
     #preconditions
     #none
 
-    result = matrix.conjugate!
+    v, d, v_inv = matrix.eigensystem
 
     #postconditions
+    assert_true(d.diagonal?)
+    assert_equal(v.inv, v_inv)
+    assert_equal((v * d * v_inv).round(5), matrix)
 
     #Invarient
     assert_equal(old_matrix, matrix)
   end
 
   def test_lup_decomposition
-    a = Matrix[[1, 2], [3, 4]]
-    l, u, p = a.lup
-    l.lower_triangular? # => true
-    u.upper_triangular? # => true
-    p.permutation?      # => true
-    l * u == a * p      # => true
-    a.lup.solve([2, 5]) # => Vector[(1/1), (1/2)]
-
     matrix = AbstractMatrixFactory.build
 
     #Invarient
@@ -881,15 +872,19 @@ class MatrixContract < Test::Unit::TestCase
     #preconditions
     #none
 
-    result = matrix.conjugate!
+    l, u, p = matrix.lup_decomposition
 
     #postconditions
+    assert_true(l.lower_triangular?)
+    assert_true(u.upper_triangular?)
+    assert_true(p.permutation?)
+    assert_equal(l * u, matrix * p)
 
     #Invarient
     assert_equal(old_matrix, matrix)
   end
 
-  def test_coerce(other)
+  def test_coerce
     matrix = AbstractMatrixFactory.build
 
     #Invarient
@@ -898,7 +893,7 @@ class MatrixContract < Test::Unit::TestCase
     #preconditions
     #none
 
-    result = matrix.conjugate!
+    result = matrix.coerce
 
     #postconditions
 
@@ -907,7 +902,7 @@ class MatrixContract < Test::Unit::TestCase
   end
 
   def test_to_a
-#arrays of arrays
+    #returns an arrays of arrays
     matrix = AbstractMatrixFactory.build
 
     #Invarient
@@ -916,9 +911,11 @@ class MatrixContract < Test::Unit::TestCase
     #preconditions
     #none
 
-    result = matrix.conjugate!
+    result = matrix.to_a
 
     #postconditions
+    assert_true(result.size, matrix.row_count)
+    assert_true(result[0].size, matrix.column_count)
 
     #Invarient
     assert_equal(old_matrix, matrix)
