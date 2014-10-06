@@ -1,6 +1,6 @@
 class SparseMatrix
   def compute
-  100
+    100
   end
 
   def transpose!

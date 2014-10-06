@@ -42,7 +42,7 @@ class AbstractMatrixFactoryContract < Test::Unit::TestCase
       assert_kind_of(Numeric, entry)
     end
 
-    new_abstract_matrix = abstract_matrix_factory.build(input_array)
+    new_abstract_matrix = abstract_matrix_factory.[](input_array)
 
     #Post-condition
     assert_true(post_condition_test(new_abstract_matrix))
