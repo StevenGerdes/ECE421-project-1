@@ -18,7 +18,7 @@ class MatrixFactoryContract < Test::Unit::TestCase
     #Pre-conditions
     assert_kind_of(Matrix, input_matrix)
 
-    result = SparseMatrixFactory.valid_data(input_matrix)
+    result = SparseMatrixFactory.is_valid?(input_matrix)
 
     #Post-condition
     assert_true(result.is_a?(TrueClass) || result.is_a?(FalseClass))
@@ -36,7 +36,7 @@ class MatrixFactoryContract < Test::Unit::TestCase
     #Pre-conditions
     assert_kind_of(Matrix, input_matrix)
 
-    result = TridiagonalMatrixFactory.valid_data(input_matrix)
+    result = TridiagonalMatrixFactory.is_valid?(input_matrix)
 
     #Post-condition
     assert_true(result.is_a?(TrueClass) || result.is_a?(FalseClass))

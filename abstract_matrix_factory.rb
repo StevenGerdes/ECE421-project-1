@@ -14,9 +14,9 @@ class AbstractMatrixFactory
   def build(row, col, &matrixBlock)
     returnMatrix = Matrix.build(row, col, &matrixBlock)
 
-    if SparseMatrixFactory.is_valid(returnMatrix)
+    if SparseMatrixFactory.is_valid?(returnMatrix)
       returnMatrix = SparseMatrixFactory.build(returnMatrix)
-    elsif TridiagonalMatrixFactory.is_valid(returnMatrix)
+    elsif TridiagonalMatrixFactory.is_valid?(returnMatrix)
       TridiagonalMatrixFactory.build(returnMatrix)
     end
 
@@ -26,9 +26,9 @@ class AbstractMatrixFactory
   def [](*matrixArray)
     returnMatrix = Matrix.[](*matrixArray)
 
-    if SparseMatrixFactory.is_valid(returnMatrix)
+    if SparseMatrixFactory.is_valid?(returnMatrix)
       returnMatrix = SparseMatrixFactory.build(returnMatrix)
-    elsif TridiagonalMatrixFactory.is_valid(returnMatrix)
+    elsif TridiagonalMatrixFactory.is_valid?(returnMatrix)
       TridiagonalMatrixFactory.build(returnMatrix)
     end
 
