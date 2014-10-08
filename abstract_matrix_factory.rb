@@ -1,17 +1,17 @@
-require 'matrix'
-require 'sparse_matrix_factory'
-require 'tridiagonal_matrix_factory'
+require './matrix'
+require './sparse_matrix_factory'
+require './tridiagonal_matrix_factory'
 
 class AbstractMatrixFactory
-  def identity(dimension)
-    return SparseMatrixFactory.identity(dimension)
+  def self.identity(dimension)
+    return SparseMatrixFactory.build(Matrix.identity(dimension))
   end
 
-  def zero(dimension)
-    return SparseMatrixFactory.zero(dimension)
+  def self.zero(row, col)
+    return SparseMatrixFactory.build(Matrix.zero(row, col))
   end
 
-  def build(row, col, &matrixBlock)
+  def self.build(row, col, &matrixBlock)
     returnMatrix = Matrix.build(row, col, &matrixBlock)
 
     if SparseMatrixFactory.is_valid?(returnMatrix)
@@ -23,7 +23,7 @@ class AbstractMatrixFactory
     return returnMatrix
   end
 
-  def [](*matrixArray)
+  def self.[](*matrixArray)
     returnMatrix = Matrix.[](*matrixArray)
 
     if SparseMatrixFactory.is_valid?(returnMatrix)

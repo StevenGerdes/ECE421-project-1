@@ -1,18 +1,17 @@
-require 'sparse_matrix'
-require 'matrix'
+require './sparse_matrix'
 
 class SparseMatrixFactory
-  @SPARSE_PERCENTAGE = .5
+  @SPARSE_PERCENTAGE = 0.5
 
-  def is_valid?(matrix)
-    return (get_zero_count(matrix) / matrix.count) < @SPARSE_PERCENTAGE
+  def self.is_valid?(matrix)
+    return (get_nonzero_count(matrix).to_f / matrix.count) < @SPARSE_PERCENTAGE
   end
 
-  def build(matrix)
+  def self.build(matrix)
     SparseMatrix.new(matrix)
   end
 
-  def get_zero_count(matrix)
+  def self.get_nonzero_count(matrix)
     return matrix.each.count {|val| val != 0}
   end
 end
