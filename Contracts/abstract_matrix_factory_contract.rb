@@ -42,7 +42,7 @@ class AbstractMatrixFactoryContract < Test::Unit::TestCase
       assert_kind_of(Numeric, entry)
     end
 
-    new_abstract_matrix = abstract_matrix_factory.build(input_array)
+    new_abstract_matrix = abstract_matrix_factory.[](input_array)
 
     #Post-condition
     assert_true(post_condition_test(new_abstract_matrix))
@@ -53,7 +53,8 @@ class AbstractMatrixFactoryContract < Test::Unit::TestCase
 
   def test_zero
     abstract_matrix_factory = AbstractMatrixFactory.new
-    matrix_arg = Numeric.new
+    matrix_row = Numeric.new
+    matrix_col = Numeric.new
 
     #Invarient
     old_matrix_factory = abstract_matrix_factory.clone
@@ -61,7 +62,7 @@ class AbstractMatrixFactoryContract < Test::Unit::TestCase
     #Pre-conditions
     assert_respond_to(matrix_arg, :to_i)
 
-    new_abstract_matrix = abstract_matrix_factory.zero(matrix_arg)
+    new_abstract_matrix = abstract_matrix_factory.zero(matrix_row, matrix_col)
 
     #Post-condition
     assert_true(post_condition_test(new_abstract_matrix))
