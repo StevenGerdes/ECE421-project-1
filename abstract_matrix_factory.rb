@@ -29,6 +29,5 @@ class AbstractMatrixFactory
     elsif TridiagonalMatrixFactory.is_valid?(return_matrix)
       TridiagonalMatrixFactory.build(return_matrix)
     end
-
   end
 end

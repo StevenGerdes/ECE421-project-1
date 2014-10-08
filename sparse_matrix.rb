@@ -5,13 +5,12 @@ class SparseMatrix
   def initialize(matrix)
     @row = matrix.row_size
     @col = matrix.column_size
-    @elements = Array[]
+    @elements = Hash.new
 
-    count = Integer(0)
-    matrix.each do |element|
-      count++
-      @elements << Sparse_Element.new(element, count)
-    end
+    matrix.each_with_index { |i, j, element|
+      @elements[index(i,j)] = element unless element == 0
+    }
+
   end
 
   def compute
@@ -27,5 +26,14 @@ class SparseMatrix
       puts element.instance_variable_get #value
       puts element.instance_variable_get #locaion
     end
+  end
+
+  def [](i,j)
+    elements[index(i,j)]
+  end
+
+private
+  def index(i,j)
+    (i-1)*@row +  (j - 1)
   end
 end
