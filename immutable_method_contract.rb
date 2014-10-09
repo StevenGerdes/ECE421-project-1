@@ -1,6 +1,6 @@
 gem 'test-unit'
 require 'test/unit'
-require '../immutable_method'
+require './immutable_method'
 
 class ImmutableMethodContract < Test::Unit::TestCase
 

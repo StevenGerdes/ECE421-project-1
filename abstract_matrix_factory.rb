@@ -1,4 +1,4 @@
-require './matrix'
+require 'matrix'
 require './sparse_matrix_factory'
 
 class AbstractMatrixFactory

@@ -1,8 +1,8 @@
 gem 'test-unit'
 require 'test/unit'
-require '../matrix'
-require '../sparse_matrix'
-require '../sparse_matrix_factory'
+require './matrix'
+require './sparse_matrix'
+require './sparse_matrix_factory'
 
 class MatrixFactoryContract < Test::Unit::TestCase
 

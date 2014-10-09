@@ -1,5 +1,6 @@
-require 'Matrix'
+
 require './immutable_method'
+require 'Matrix'
 
 class Matrix
   include ImmutableMethod

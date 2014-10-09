@@ -1,8 +1,8 @@
-gem 'test-unit'
+
+require './matrix'
+require './abstract_matrix_factory'
+require './sparse_matrix_factory'
 require 'test/unit'
-require '../matrix'
-require '../abstract_matrix_factory'
-require '../sparse_matrix_factory'
 
 class AbstractMatrixFactoryContract < Test::Unit::TestCase
 
