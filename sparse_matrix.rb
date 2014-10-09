@@ -1,4 +1,5 @@
 require './immutable_method'
+require './matrix'
 
 class SparseMatrix
 
@@ -314,7 +315,7 @@ class SparseMatrix
 
   #returns element index as posistion
   def position(i)
-    return i % @col, (i / @row) + 1
+    return i / @col, (i % @col)
   end
 
   #returns matrix representation
@@ -322,7 +323,8 @@ class SparseMatrix
     return_matrix = Matrix.zero(@row, @col)
     @elements.each_pair do |key, value|
       i, j = position(key)
-      return_matrix = return_matrix.set(i, j, value)
+      #puts "Key: #{key} Value: #{value} i: #{i} j: #{j}"
+      return_matrix.set(i, j, value)
     end
 
     return_matrix
