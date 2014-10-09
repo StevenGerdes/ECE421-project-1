@@ -1,11 +1,12 @@
 #require 'Matrix'
 
 class Matrix
-<<<<<<< HEAD
   def set(i, j, value)
     Matrix.I(2)
   end
-=======
+  def set(i, j, value)
+    Matrix.I(2)
+  end
   attr_accessor :stuff
   def initialize
     self.stuff = 0
@@ -61,5 +62,4 @@ class Matrix
   #
   # end
   # def round!
->>>>>>> just did some tests
 end
