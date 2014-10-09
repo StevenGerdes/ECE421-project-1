@@ -5,14 +5,15 @@ class Matrix
   include ImmutableMethod
 
   def inverse!
-
+    self.inverse_from(self)
   end
 
   def transpose!
-
+    @rows = @rows.transpose
   end
 
   def multiply!
+
   end
 
   def divide!
@@ -59,8 +60,8 @@ class Matrix
 
   end
 
-  def set(i, j)
-
+  def set(i, j, value)
+    @rows[i][j] = value
   end
 
   def round!
