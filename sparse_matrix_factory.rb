@@ -11,14 +11,14 @@ class SparseMatrixFactory
     (get_nonzero_count(matrix).to_f / matrix.count) < @sparse_percentage
   end
 
-  def self.build(matrix)
+  def build(matrix)
     SparseMatrix.new(matrix)
   end
 
   private
 
-  def self.get_nonzero_count(matrix)
-    return matrix.each.count { |val| val != 0 }
+  def get_nonzero_count(matrix)
+    matrix.each.count { |val| val != 0 }
   end
 
 end
