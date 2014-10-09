@@ -2,9 +2,7 @@ gem 'test-unit'
 require 'test/unit'
 require '../matrix'
 require '../abstract_matrix_factory'
-require '../matrix_factory'
 require '../sparse_matrix_factory'
-require '../tridiagonal_matrix_factory'
 
 class AbstractMatrixFactoryContract < Test::Unit::TestCase
 
@@ -20,7 +18,7 @@ class AbstractMatrixFactoryContract < Test::Unit::TestCase
     assert_respond_to(matrix_row, :to_i)
     assert_respond_to(matrix_col, :to_i)
 
-    new_abstract_matrix = abstract_matrix_factory.build(matrix_row, matrix_col) {|row, col| col - row }
+    new_abstract_matrix = abstract_matrix_factory.build(matrix_row, matrix_col) { |row, col| col - row }
 
     #Post-condition
     assert_true(post_condition_test(new_abstract_matrix))
@@ -60,7 +58,8 @@ class AbstractMatrixFactoryContract < Test::Unit::TestCase
     old_matrix_factory = abstract_matrix_factory.clone
 
     #Pre-conditions
-    assert_respond_to(matrix_arg, :to_i)
+    assert_respond_to(matrix_row, :to_i)
+    assert_respond_to(matrix_col, :to_i)
 
     new_abstract_matrix = abstract_matrix_factory.zero(matrix_row, matrix_col)
 

@@ -1,33 +1,33 @@
 require './matrix'
 require './sparse_matrix_factory'
-require './tridiagonal_matrix_factory'
 
 class AbstractMatrixFactory
   def self.identity(dimension)
-    return SparseMatrixFactory.build(Matrix.identity(dimension))
+    create_from_matrix(Matrix.identity(dimension.to_i))
   end
 
   def self.zero(row, col)
-    return SparseMatrixFactory.build(Matrix.zero(row, col))
+    create_from_matrix(Matrix.zero(row.to_i, col.to_i))
   end
 
   def self.build(row, col, &matrix_block)
-    return_matrix = Matrix.build(row, col, &matrix_block)
-
-    if SparseMatrixFactory.is_valid?(return_matrix)
-      SparseMatrixFactory.build(return_matrix)
-    elsif TridiagonalMatrixFactory.is_valid?(return_matrix)
-      TridiagonalMatrixFactory.build(return_matrix)
-    end
+    create_from_matrix(Matrix.build(row.to_i, col.to_i, &matrix_block))
   end
 
   def self.[](*matrix_array)
-    return_matrix = Matrix.[](*matrix_array)
-
-    if SparseMatrixFactory.is_valid?(return_matrix)
-      SparseMatrixFactory.build(return_matrix)
-    elsif TridiagonalMatrixFactory.is_valid?(return_matrix)
-      TridiagonalMatrixFactory.build(return_matrix)
-    end
+    create_from_matrix(Matrix.[](*matrix_array))
   end
+
+  private
+  def self.create_from_matrix(matrix)
+
+    sparse_matrix_factory = SparseMatrixFactory.new(0.5)
+
+    if sparse_matrix_factory.is_valid?(matrix)
+      sparse_matrix_factory.build(matrix)
+    end
+
+    matrix
+  end
+
 end

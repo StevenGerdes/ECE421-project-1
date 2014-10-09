@@ -1,65 +1,69 @@
-#require 'Matrix'
+require 'Matrix'
+require './immutable_method'
 
 class Matrix
-  def set(i, j, value)
-    Matrix.I(2)
-  end
-  def set(i, j, value)
-    Matrix.I(2)
-  end
-  attr_accessor :stuff
-  def initialize
-    self.stuff = 0
-  end
-  def test_method
-    self.immutate(__method__)
+  include ImmutableMethod
+
+  def inverse!
+
   end
 
-  def test_method_with_args!(x,y)
-    self.stuff = x + y
+  def transpose!
+
   end
 
-  def test_method_with_args(x,y)
-    self.immutate(__method__,x,y)
+  def multiply!
   end
 
-  def test_method!
-    self.stuff = 10
+  def divide!
+
   end
 
-  def out
-    puts self.stuff
+  def add!
+
   end
 
-  def immutate( method, *args)
-    copy = self.clone
-    copy.send( method.to_s.concat('!').to_sym, *args  )
-    copy
+  def subtract!
+
   end
-  # def multiply!
-  # def scalar_multiply
-  #
-  # end
-  # def scalar_multiply!
-  # def add!
-  # def scalar_add
-  #
-  # end
-  # def scalar_add!
-  # def subtract!
-  # def scalar_subtract
-  #
-  # end
-  # def scalar_subtract!
-  # def divide!
-  # def scalar_divide
-  #
-  # end
-  # def scalar_divide!
-  # def inverse!
-  # def transpose!
-  # def set(i,j)
-  #
-  # end
-  # def round!
+
+  def scalar_multiply(arg)
+    call_method_immutably(__method__, arg)
+  end
+
+  def scalar_multiply!(arg)
+    call_method_immutably(__method__, arg)
+  end
+
+  def scalar_add(arg)
+    call_method_immutably(__method__, arg)
+  end
+
+  def scalar_add!
+
+  end
+
+  def scalar_subtract(arg)
+    call_method_immutably(__method__, arg)
+  end
+
+  def scalar_subtract!
+
+  end
+
+  def scalar_divide(arg)
+    call_method_immutably(__method__, arg)
+  end
+
+  def scalar_divide!(to_divide_by)
+
+  end
+
+  def set(i, j)
+
+  end
+
+  def round!
+
+  end
 end

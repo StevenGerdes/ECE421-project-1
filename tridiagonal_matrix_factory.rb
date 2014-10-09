@@ -1,2 +1,0 @@
-class TridiagonalMatrixFactory
-end

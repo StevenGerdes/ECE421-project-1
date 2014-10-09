@@ -1,7 +1,6 @@
 require './abstract_matrix_factory'
 require './sparse_matrix_factory'
 require './sparse_matrix'
-require './sparse_element'
 
 class Testing
   def self.tester

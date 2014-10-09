@@ -1,6 +1,8 @@
-require './sparse_element'
+require './immutable_method'
 
 class SparseMatrix
+
+  include ImmutableMethod
 
   #initializes new sparse matrix
   def initialize(matrix)
@@ -9,7 +11,7 @@ class SparseMatrix
     @elements = Hash.new
 
     matrix.each_with_index { |element, i, j|
-      @elements[index(i,j)] = element unless element == 0
+      @elements[index(i, j)] = element unless element == 0
     }
   end
 
@@ -25,12 +27,12 @@ class SparseMatrix
 
   #sets element i, j to the value
   def set(i, j, value)
-    @elements[index(i,j)] = value
+    @elements[index(i, j)] = value
   end
 
   #returns the element i, j
-  def [](i,j)
-    @elements[index(i,j)]
+  def [](i, j)
+    @elements[index(i, j)]
   end
 
   #returns the ith row
@@ -72,7 +74,7 @@ class SparseMatrix
 
   #returns result of matrix multiplied by a number
   def scalar_multiply(i)
-    immutate(__method__, i )
+    call_method_immutably(__method__, i)
   end
 
   #reutnrs resulf of multiplying a matrix by its inverse
@@ -94,7 +96,7 @@ class SparseMatrix
 
 
   def scalar_divide(i)
-    immutate(__method__, i )
+    call_method_immutably(__method__, i)
   end
 
   def +(matrix)
@@ -110,7 +112,7 @@ class SparseMatrix
   end
 
   def scalar_add(i)
-    immutate(__method__, i )
+    call_method_immutably(__method__, i)
   end
 
   def -(matrix)
@@ -126,7 +128,7 @@ class SparseMatrix
   end
 
   def scalar_subtract(i)
-    immutate(__method__, i )
+    call_method_immutably(__method__, i)
   end
 
   def conjugate
@@ -134,7 +136,7 @@ class SparseMatrix
   end
 
   def conjugate!
-    immutate(__method__, i)
+    call_method_immutably(__method__, i)
   end
 
   def determinant()
@@ -154,7 +156,7 @@ class SparseMatrix
   end
 
   def inverse()
-    immutate(__method__, i )
+    call_method_immutably(__method__, i)
   end
 
   def lup_decomposition
@@ -180,11 +182,11 @@ class SparseMatrix
 
   def round!(i)
     @elements.each_value { |value|
-      value.round(i)}
+      value.round(i) }
   end
 
   def round(i)
-    immutate(__method__, i )
+    call_method_immutably(__method__, i)
   end
 
   def trace
@@ -196,7 +198,7 @@ class SparseMatrix
   end
 
   def transpose()
-    immutate(__method__, i )
+    call_method_immutably(__method__, i)
   end
 
   def to_a
@@ -209,7 +211,7 @@ class SparseMatrix
 
   def diagonal?
     to_matrix.diagonal?
-    end
+  end
 
   def hermitian?
     to_matrix.hermitian?
@@ -263,8 +265,8 @@ class SparseMatrix
     to_matrix.zero?
   end
 
-private
-  def index(i,j)
+  private
+  def index(i, j)
     (i)*@row + (j)
   end
 
@@ -288,13 +290,7 @@ private
     @elements = Hash.new
 
     matrix.each_with_index { |element, i, j|
-      @elements[index(i,j)] = element unless element == 0
+      @elements[index(i, j)] = element unless element == 0
     }
-  end
-
-  def immutate( method, *args)
-    copy = self.clone
-    copy.send( method.to_s.concat('!').to_sym, *args  )
-    copy
   end
 end
