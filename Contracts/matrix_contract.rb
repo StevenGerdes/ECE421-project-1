@@ -44,8 +44,8 @@ class MatrixContract < Test::Unit::TestCase
   end
 
   def test_multiply_matrix
-    matrix = AbstractMatrixFactory.build
-    to_multiply = AbstractMatrixFactory.build
+    matrix = AbstractMatrixFactory.I(3)
+    to_multiply = AbstractMatrixFactory.I(3)
 
     #Invarient
     matrix_old = matrix.clone
@@ -64,8 +64,8 @@ class MatrixContract < Test::Unit::TestCase
   end
 
   def test_mutable_multiply_matrix
-    matrix = AbstractMatrixFactory.build
-    to_multiply = AbstractMatrixFactory.build
+    matrix = AbstractMatrixFactory.I(3)
+    to_multiply = AbstractMatrixFactory.I(3)
     old_row_count = matrix.row_count
 
     #pre-conditions
@@ -82,7 +82,7 @@ class MatrixContract < Test::Unit::TestCase
   end
 
   def test_multiply_scalar
-    matrix = AbstractMatrixFactory.build
+    matrix = AbstractMatrixFactory.I(3)
     to_multiply = Numeric.new
 
     #Invarient
@@ -103,7 +103,7 @@ class MatrixContract < Test::Unit::TestCase
   end
 
   def test_mutable_multiply_scalar
-    matrix = AbstractMatrixFactory.build
+    matrix = AbstractMatrixFactory.I(3)
     to_multiply = Numeric.new
     matrix_old = matrix.clone
 
@@ -125,8 +125,8 @@ class MatrixContract < Test::Unit::TestCase
   end
 
   def test_add_matrix
-    matrix = AbstractMatrixFactory.build
-    matrix_arg = AbstractMatrixFactory.build
+    matrix = AbstractMatrixFactory.I(3)
+    matrix_arg = AbstractMatrixFactory.I(3)
 
     #invarient
     matrix_old = matrix.clone
@@ -147,8 +147,8 @@ class MatrixContract < Test::Unit::TestCase
   end
 
   def test_mutable_add_matrix
-    matrix = AbstractMatrixFactory.build
-    matrix_arg = AbstractMatrixFactory.build
+    matrix = AbstractMatrixFactory.I(3)
+    matrix_arg = AbstractMatrixFactory.I(3)
     matrix_old = matrix.clone
 
     #invarient
@@ -170,7 +170,7 @@ class MatrixContract < Test::Unit::TestCase
   end
 
   def test_add_scalar
-    matrix = AbstractMatrixFactory.build
+    matrix = AbstractMatrixFactory.I(3)
     scalar_arg = Numeric.new
 
     #invarient
@@ -190,8 +190,8 @@ class MatrixContract < Test::Unit::TestCase
   end
 
   def test_mutable_add_scalar
-    matrix = AbstractMatrixFactory.build
-    scalar_arg = AbstractMatrixFactory.build
+    matrix = AbstractMatrixFactory.I(3)
+    scalar_arg = AbstractMatrixFactory.I(3)
     matrix_old = matrix.clone
 
     #invarient
@@ -212,8 +212,8 @@ class MatrixContract < Test::Unit::TestCase
   end
 
   def test_subtract_matrix
-    matrix = AbstractMatrixFactory.build
-    matrix_arg = AbstractMatrixFactory.build
+    matrix = AbstractMatrixFactory.I(3)
+    matrix_arg = AbstractMatrixFactory.I(3)
 
     #invarient
     matrix_old = matrix.clone
@@ -234,8 +234,8 @@ class MatrixContract < Test::Unit::TestCase
   end
 
   def test_mutable_subtract_matrix
-    matrix = AbstractMatrixFactory.build
-    matrix_arg = AbstractMatrixFactory.build
+    matrix = AbstractMatrixFactory.I(3)
+    matrix_arg = AbstractMatrixFactory.I(3)
     matrix_old = matrix.clone
 
     #invarient
@@ -257,7 +257,7 @@ class MatrixContract < Test::Unit::TestCase
   end
 
   def test_subtract_scalar
-    matrix = AbstractMatrixFactory.build
+    matrix = AbstractMatrixFactory.I(3)
     scalar_arg = Numeric.new
 
     #invarient
@@ -278,8 +278,8 @@ class MatrixContract < Test::Unit::TestCase
   end
 
   def test_mutable_subtract_scalar
-    matrix = AbstractMatrixFactory.build
-    scalar_arg = AbstractMatrixFactory.build
+    matrix = AbstractMatrixFactory.I(3)
+    scalar_arg = AbstractMatrixFactory.I(3)
     matrix_old = matrix.clone
 
     #invarient
@@ -300,8 +300,8 @@ class MatrixContract < Test::Unit::TestCase
   end
 
   def test_divide_matrix
-    matrix = AbstractMatrixFactory.build
-    to_divide = AbstractMatrixFactory.build
+    matrix = AbstractMatrixFactory.I(3)
+    to_divide = AbstractMatrixFactory.I(3)
 
     #Invarient
     matrix_old = matrix.clone
@@ -322,8 +322,8 @@ class MatrixContract < Test::Unit::TestCase
   end
 
   def test_mutable_divide_matrix
-    matrix = AbstractMatrixFactory.build
-    to_divide = AbstractMatrixFactory.build
+    matrix = AbstractMatrixFactory.I(3)
+    to_divide = AbstractMatrixFactory.I(3)
     matrix_old = matrix.clone
 
     #pre-conditions
@@ -339,7 +339,7 @@ class MatrixContract < Test::Unit::TestCase
   end
 
   def test_divide_scalar
-    matrix = AbstractMatrixFactory.build
+    matrix = AbstractMatrixFactory.I(3)
     to_divide = Numeric.new
 
     #Invarient
@@ -359,7 +359,7 @@ class MatrixContract < Test::Unit::TestCase
   end
 
   def test_mutable_divide_scalar
-    matrix = AbstractMatrixFactory.build
+    matrix = AbstractMatrixFactory.I(3)
     to_divide = Numeric.new
     matrix_old = matrix.clone
 
@@ -382,7 +382,7 @@ class MatrixContract < Test::Unit::TestCase
   end
 
   def test_inverse
-    matrix = AbstractMatrixFactory.build
+    matrix = AbstractMatrixFactory.I(3)
 
     #Invarient
     matrix_old = matrix.clone
@@ -400,7 +400,7 @@ class MatrixContract < Test::Unit::TestCase
   end
 
   def test_inverse!
-    matrix = AbstractMatrixFactory.build
+    matrix = AbstractMatrixFactory.I(3)
 
     matrix_old = matrix.clone
 
@@ -417,7 +417,7 @@ class MatrixContract < Test::Unit::TestCase
   end
 
   def test_determinant
-    matrix = AbstractMatrixFactory.build
+    matrix = AbstractMatrixFactory.I(3)
 
     matrix_old = matrix.clone
 
@@ -435,7 +435,7 @@ class MatrixContract < Test::Unit::TestCase
   end
 
   def test_transpose
-    matrix = AbstractMatrixFactory.build
+    matrix = AbstractMatrixFactory.I(3)
 
 
     #Invarient
@@ -456,7 +456,7 @@ class MatrixContract < Test::Unit::TestCase
   end
 
   def test_transpose!
-    matrix = AbstractMatrixFactory.build
+    matrix = AbstractMatrixFactory.I(3)
 
     matrix_old = matrix.clone
 
@@ -478,7 +478,7 @@ class MatrixContract < Test::Unit::TestCase
   end
 
   def test_access
-    matrix = AbstractMatrixFactory.build
+    matrix = AbstractMatrixFactory.I(3)
 
     i = Integer.new
     j = Integer.new
@@ -502,7 +502,7 @@ class MatrixContract < Test::Unit::TestCase
   end
 
   def test_row
-    matrix = AbstractMatrixFactory.build
+    matrix = AbstractMatrixFactory.I(3)
 
     i = Integer.new
 
@@ -523,7 +523,7 @@ class MatrixContract < Test::Unit::TestCase
   end
 
   def test_column
-    matrix = AbstractMatrixFactory.build
+    matrix = AbstractMatrixFactory.I(3)
 
     j = Integer.new
 
@@ -544,7 +544,7 @@ class MatrixContract < Test::Unit::TestCase
   end
 
   def test_row_vectors
-    matrix = AbstractMatrixFactory.build
+    matrix = AbstractMatrixFactory.I(3)
 
     #Invarient
     matrix_old = matrix.clone
@@ -561,7 +561,7 @@ class MatrixContract < Test::Unit::TestCase
   end
 
   def test_column_vectors
-    matrix = AbstractMatrixFactory.build
+    matrix = AbstractMatrixFactory.I(3)
 
     #Invarient
     matrix_old = matrix.clone
@@ -578,7 +578,7 @@ class MatrixContract < Test::Unit::TestCase
   end
 
   def test_row_count
-    matrix = AbstractMatrixFactory.build
+    matrix = AbstractMatrixFactory.I(3)
 
     #Invarient
     old_matrix = matrix.clone
@@ -597,7 +597,7 @@ class MatrixContract < Test::Unit::TestCase
   end
 
   def test_column_count
-    matrix = AbstractMatrixFactory.build
+    matrix = AbstractMatrixFactory.I(3)
 
     #Invarient
     old_matrix = matrix.clone
@@ -616,7 +616,7 @@ class MatrixContract < Test::Unit::TestCase
   end
 
   def test_round
-    matrix = AbstractMatrixFactory.build
+    matrix = AbstractMatrixFactory.I(3)
 
     num_digits = Integer.new
 
@@ -638,7 +638,7 @@ class MatrixContract < Test::Unit::TestCase
   end
 
   def test_round!
-    matrix = AbstractMatrixFactory.build
+    matrix = AbstractMatrixFactory.I(3)
 
     num_digits = Integer.new
 
@@ -661,7 +661,7 @@ class MatrixContract < Test::Unit::TestCase
   end
 
   def test_to_s
-    matrix = AbstractMatrixFactory.build
+    matrix = AbstractMatrixFactory.I(3)
 
     #Invarient
     old_matrix = matrix.clone
@@ -679,7 +679,7 @@ class MatrixContract < Test::Unit::TestCase
   end
 
   def test_resize!
-    matrix = AbstractMatrixFactory.build
+    matrix = AbstractMatrixFactory.I(3)
 
     i = Integer.new
     j = Integer.new
@@ -697,7 +697,7 @@ class MatrixContract < Test::Unit::TestCase
   end
 
   def test_set
-    matrix = AbstractMatrixFactory.build
+    matrix = AbstractMatrixFactory.I(3)
     i = Integer.new
     j = Integer.new
     value = Numeric.new
@@ -721,7 +721,7 @@ class MatrixContract < Test::Unit::TestCase
   end
 
   def test_imaginary
-    matrix = AbstractMatrixFactory.build
+    matrix = AbstractMatrixFactory.I(3)
 
     #Invarient
     old_matrix = matrix.clone
@@ -741,7 +741,7 @@ class MatrixContract < Test::Unit::TestCase
   end
 
   def test_real
-    matrix = AbstractMatrixFactory.build
+    matrix = AbstractMatrixFactory.I(3)
 
     #Invarient
     old_matrix = matrix.clone
@@ -761,7 +761,7 @@ class MatrixContract < Test::Unit::TestCase
   end
 
   def test_conjugate
-    matrix = AbstractMatrixFactory.build
+    matrix = AbstractMatrixFactory.I(3)
 
     #Invarient
     old_matrix = matrix.clone
@@ -779,7 +779,7 @@ class MatrixContract < Test::Unit::TestCase
   end
 
   def test_conjugate!
-    matrix = AbstractMatrixFactory.build
+    matrix = AbstractMatrixFactory.I(3)
 
     #Invarient
     old_matrix = matrix.clone
@@ -797,7 +797,7 @@ class MatrixContract < Test::Unit::TestCase
   end
 
   def test_rectangular
-    matrix = AbstractMatrixFactory.build
+    matrix = AbstractMatrixFactory.I(3)
 
     #Invarient
     old_matrix = matrix.clone
@@ -805,7 +805,7 @@ class MatrixContract < Test::Unit::TestCase
     #preconditions
     #none
 
-    result = matrix.imaginary
+    result = matrix.rectangular
 
     #postconditions
     assert_equal(result.size, 2)
@@ -818,7 +818,7 @@ class MatrixContract < Test::Unit::TestCase
 
   def test_rank
     #returns number of linearly independant rows
-    matrix = AbstractMatrixFactory.build
+    matrix = AbstractMatrixFactory.I(3)
 
     #Invarient
     old_matrix = matrix.clone
@@ -837,7 +837,7 @@ class MatrixContract < Test::Unit::TestCase
 
   def test_trace
     #Returns the trace (sum of diagonal elements) of the matrix
-    matrix = AbstractMatrixFactory.build
+    matrix = AbstractMatrixFactory.I(3)
 
     #Invarient
     old_matrix = matrix.clone
@@ -855,7 +855,7 @@ class MatrixContract < Test::Unit::TestCase
   end
 
   def test_eigen
-    matrix = AbstractMatrixFactory.build
+    matrix = AbstractMatrixFactory.I(3)
 
     #Invarient
     old_matrix = matrix.clone
@@ -875,7 +875,7 @@ class MatrixContract < Test::Unit::TestCase
   end
 
   def test_lup_decomposition
-    matrix = AbstractMatrixFactory.build
+    matrix = AbstractMatrixFactory.I(3)
 
     #Invarient
     old_matrix = matrix.clone
@@ -896,8 +896,7 @@ class MatrixContract < Test::Unit::TestCase
   end
 
   def test_coerce
-    matrix = AbstractMatrixFactory.build
-
+    matrix = AbstractMatrixFactory.I(3)
     #Invarient
     old_matrix = matrix.clone
     arg = Numeric.new
@@ -918,7 +917,8 @@ class MatrixContract < Test::Unit::TestCase
 
   def test_to_a
     #returns an arrays of arrays
-    matrix = AbstractMatrixFactory.build    old_matrix = matrix.clone
+    matrix = AbstractMatrixFactory.I(3)
+    old_matrix = matrix.clone
 
     #preconditions
     #none
