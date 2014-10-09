@@ -1,5 +1,6 @@
 gem 'test-unit'
 require 'test/unit'
+require '../abstract_matrix_factory'
 
 class MatrixContract < Test::Unit::TestCase
   def test_properties

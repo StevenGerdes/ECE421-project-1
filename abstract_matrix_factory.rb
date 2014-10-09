@@ -2,8 +2,16 @@ require './matrix'
 require './sparse_matrix_factory'
 
 class AbstractMatrixFactory
+
+
+
   def self.identity(dimension)
     create_from_matrix(Matrix.identity(dimension.to_i))
+  end
+
+  class << AbstractMatrixFactory
+    alias unit identity
+    alias I identity
   end
 
   def self.zero(row, col)
