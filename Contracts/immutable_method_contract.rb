@@ -1,28 +1,47 @@
 gem 'test-unit'
 require 'test/unit'
-require('../immutable_method')
+require '../immutable_method'
 
 class ImmutableMethodContract < Test::Unit::TestCase
 
-  class Array
+  class TempClass
     include ImmutableMethod
+
+    def initialize(number)
+      @value = number
+    end
+    def increase
+      puts "non"
+      TempClass.new(@value + 1)
+    end
+    def increase!
+      puts "mutate"
+      @value = @value + 1
+    end
+    def value
+      @value
+    end
+    def ==(other)
+      other.value == @value
+    end
+
   end
 
   def test_call_method_immutably
 
-    obj = [1, 2, 3, nil, 2, 3, 4]
+    obj = TempClass.new(0)
     obj_clone = obj.clone
-    method = :compact
+    method = :increase
 
     #preconditions
     assert_respond_to(method, :to_s)
     assert_respond_to(obj, method.to_s.concat('!').to_sym)
 
-    obj.call_method_immutably(method)
+    result1 = obj.call_method_immutably(method)
     result = obj_clone.send(method)
 
     #postconditions
-    assert_equal(obj, result)
+    assert_equal(result1, result)
 
     #invarient
     #none
